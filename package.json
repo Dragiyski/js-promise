@@ -23,6 +23,10 @@
       "android-browser/latest"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dragiyski/js-promise"
+  },
   "scripts": {
     "test": "mocha test/validation/*.js"
   }

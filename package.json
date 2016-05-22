@@ -1,0 +1,29 @@
+{
+  "name": "promise",
+  "private": true,
+  "author": "Plamen Dragiyski",
+  "main": "./lib/promise/index.js",
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "promises-aplus-tests": "^2.1.0",
+    "testling": "^1.7.1",
+    "v8-profiler": "^5.6.5"
+  },
+  "testling": {
+    "harness": "mocha-bdd",
+    "files": "test/validation/*.js",
+    "browsers": [
+      "ie/6..latest",
+      "chrome/22..latest",
+      "firefox/16..latest",
+      "safari/latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6",
+      "android-browser/latest"
+    ]
+  },
+  "scripts": {
+    "test": "mocha test/validation/*.js"
+  }
+}

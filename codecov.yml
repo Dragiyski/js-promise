@@ -1,3 +1,7 @@
+codecov:
+  token: fb2782b9-aff0-4977-826a-423d9e245d2b
+  branch: master
+
 coverage:
   precision: 2
   round: down

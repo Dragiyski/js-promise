@@ -1,15 +1,15 @@
 var assert = require('chai').assert;
 var Promise = require('../..');
 
-describe("Construct: ", function () {
-    context('When call as a function,', function () {
+describe("When promise constructor is called", function () {
+    context('as a function,', function () {
         specify('it should construct a promise.', function () {
             var p = Promise(function () {
             });
             assert.instanceOf(p, Promise);
         });
     });
-    context('When called with invalid parameters,', function () {
+    context('with invalid `resolver` argument,', function () {
         context('it should throw exception.', function () {
             specify('`resolver` is undefined', function () {
                 assert.throws(function () {
@@ -112,6 +112,61 @@ describe("Construct: ", function () {
                     }, TypeError, 'Promise resolver Symbol(test) is not a function');
                 });
             })();
+        });
+    });
+    context('with `resolver` that throws exception, make rejected promise', function() {
+        specify('from pending promise', function(done) {
+            var p, errorToThrow = {}, thrownError, isCalled = false;
+            assert.doesNotThrow(function() {
+                p = new Promise(function() {
+                    throw errorToThrow;
+                });
+            });
+            p.then(null, function(err) {
+                thrownError = err;
+                isCalled = true;
+            });
+            setTimeout(function() {
+                assert(isCalled, 'Promise catch handler never called.');
+                assert.strictEqual(thrownError, errorToThrow);
+                done();
+            }, 50);
+        });
+        specify('from already-fulfilled promise', function(done) {
+            var p, errorToThrow = {}, thrownError, isCalled = false;
+            assert.doesNotThrow(function() {
+                p = new Promise(function(fulfill) {
+                    fulfill('test');
+                    throw errorToThrow;
+                });
+            });
+            p.then(null, function(err) {
+                thrownError = err;
+                isCalled = true;
+            });
+            setTimeout(function() {
+                assert(isCalled, 'Promise catch handler never called.');
+                assert.strictEqual(thrownError, errorToThrow, 'Promise rejected with wrong reason.');
+                done();
+            }, 50);
+        });
+        specify('from already-rejected promise', function(done) {
+            var p, errorToThrow = {}, wrongError = {}, thrownError, isCalled = false;
+            assert.doesNotThrow(function() {
+                p = new Promise(function(fulfill, reject) {
+                    reject(wrongError);
+                    throw errorToThrow;
+                });
+            });
+            p.then(null, function(err) {
+                thrownError = err;
+                isCalled = true;
+            });
+            setTimeout(function() {
+                assert(isCalled, 'Promise catch handler never called.');
+                assert.strictEqual(thrownError, errorToThrow, 'Promise rejected with wrong reason.');
+                done();
+            }, 50);
         });
     });
 });

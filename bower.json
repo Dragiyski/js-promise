@@ -1,0 +1,32 @@
+{
+  "name": "dragiyski/promise",
+  "version": "0.0.1",
+  "description": "Extensible promise library",
+  "main": "./dist/browser.js",
+  "moduleType": [
+    "node",
+    "amd",
+    "globals"
+  ],
+  "authors": [
+    "Plamen Dragiyski"
+  ],
+  "license": "LGPL-3.0",
+  "keywords": [
+    "Promise",
+    "promise",
+    "oop"
+  ],
+  "homepage": "https://github.com/Dragiyski/js-promise",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "scripts": {
+    "postinstall": "node lib/build"
+  }
+}

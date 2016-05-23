@@ -5,6 +5,7 @@
   "author": "Plamen Dragiyski",
   "main": "./lib/promise/index.js",
   "devDependencies": {
+    "chai": "^3.5.0",
     "coveralls": "^2.11.9",
     "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
@@ -31,6 +32,8 @@
   },
   "scripts": {
     "test": "mocha test/validation/*.js",
-    "coveralls": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/validation/*.js && cat ./coverage/lcov.info | coveralls && rm -rf coverage"
+    "install": "node lib/build",
+    "coverage": "NODE_COVERAGE_DEST=coverage-$(date +%Y-%m-%d-%H-%M-%S-%N);istanbul cover -x **/dist/** -x **/lib/build/** node_modules/mocha/bin/_mocha -- -R spec test/validation/*.js;mv coverage $NODE_COVERAGE_DEST;xdg-open $NODE_COVERAGE_DEST/lcov-report/index.html",
+    "coveralls": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/validation/*.js && cat ./coverage/lcov.info | coveralls && rm -rf coverage"
   }
 }

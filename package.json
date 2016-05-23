@@ -5,6 +5,8 @@
   "author": "Plamen Dragiyski",
   "main": "./lib/promise/index.js",
   "devDependencies": {
+    "coveralls": "^2.11.9",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
     "promises-aplus-tests": "^2.1.0",
     "testling": "^1.7.1"
@@ -28,6 +30,7 @@
     "url": "https://github.com/Dragiyski/js-promise"
   },
   "scripts": {
-    "test": "mocha test/validation/*.js"
+    "test": "mocha test/validation/*.js",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/validation/*.js && cat ./coverage/lcov.info | coveralls && rm -rf coverage"
   }
 }

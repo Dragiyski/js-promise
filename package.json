@@ -31,6 +31,6 @@
   },
   "scripts": {
     "test": "mocha test/validation/*.js",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/validation/*.js && cat ./coverage/lcov.info | coveralls && rm -rf coverage"
+    "coveralls": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec test/validation/*.js && cat ./coverage/lcov.info | coveralls && rm -rf coverage"
   }
 }

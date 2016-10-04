@@ -2,6 +2,7 @@
     "use strict";
 
     var symbolCheck = function () {
+        return false;
         if (typeof Symbol !== 'function') {
             return false;
         }
@@ -9,9 +10,9 @@
         return typeof s === 'symbol';
     };
 
-    var sc = {};
+    var sc = {}, supportSymbols = symbolCheck();
 
-    var makeSymbol = symbolCheck() ? function (name) {
+    var makeSymbol = supportSymbols ? function (name) {
         return Symbol(name);
     } : function (name) {
         var s = 'dragiyski/promise:' + name;
@@ -23,7 +24,8 @@
         return s;
     };
 
-    module.exports = {
+
+    var symbolList = {
         hasValue: makeSymbol('hasValue'),
         hasResolvedValue: makeSymbol('hasResolvedValue'),
         isFulfilled: makeSymbol('isFulfilled'),
@@ -35,6 +37,17 @@
         onLeaveQueue: makeSymbol('onLeaveQueue'),
         onFulfill: makeSymbol('onFulfill'),
         onReject: makeSymbol('onReject'),
+        internalResolver: makeSymbol('internalResolver'),
         plugin: makeSymbol('plugin')
     };
+    if(supportSymbols) {
+        module.exports = symbolList;
+    } else {
+        var code = Object.keys(symbolList).map(function(key) {
+            return JSON.stringify(key) + ':' + JSON.stringify(symbolList[key]);
+        });
+        code = code.join(',');
+        code = 'return {' + code + '};';
+        module.exports = (new Function(code))();
+    }
 })();
